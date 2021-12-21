@@ -116,10 +116,22 @@ class LinkedList:
                 break
             iterator = iterator.next
         
+    def check(self,data):
+        """Checks if a given object is in the linked list"""
+        lists = self.head
+        while lists:
+            if lists.data==data:
+                return data+" is in Linked list"
+            lists = lists.next
+        return data+" is not in Linked list"
         
 if __name__ == '__main__':
     fruit = LinkedList()
     fruit.insert_infront("Mango")
     fruit.insert_infront("Banana")
+    fruit.insert_infront("Orange")
     fruit.insert_end("Cashew")
+    fruit.insert_after_value("Mango","Soursop")
     fruit.show()
+    # fruit.check("Guava")
+    fruit.check("Soursop")
