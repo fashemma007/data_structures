@@ -1,7 +1,7 @@
 class HashTable:
     def __init__(self):
         self.Max = 100
-        self.list = ["Empty" for i in range(self.Max)]
+        self.list = [[] for i in range(self.Max)]
 
     def gen_hash(self,key):
         hash = 0
@@ -13,21 +13,36 @@ class HashTable:
         """This allows us use the self['key'] = value
         to set the items"""
         hash = self.gen_hash(key)
-        self.list[hash]=val
+        found=False
+        for indx,element in enumerate(self.list[hash]):
+            if len(element)==2 and element[0]==key:
+                self.list[hash][indx]=(key,val)
+                found=True
+                break
+        if not found:
+            self.list[hash].append((key,val))
+        
     
     def __getitem__(self,key):
         """This allows us use the self['key'] to get the items"""
         hash = self.gen_hash(key)
-        return self.list[hash]
+        for element in self.list[hash]:
+            if element[0]==key:
+                return element[1]
+            
     
     def __delitem__(self,key):
         hash = self.gen_hash(key)
-        self.list[hash] = "Empty"
+        iterable = self.list[hash]
+        for element in self.list[hash]:
+            if element[0]==key:
+                iterable.pop(iterable.index(element))
         return
 
 fruit_prices = HashTable()
 fruit_prices['Guava']=200
 fruit_prices['Mango']=150
+fruit_prices['Cashew']=250
 fruit_prices['Sug']=50
 print(fruit_prices.list)
 print("__________Running `del fruit_prices['Sug']`__________ ")
